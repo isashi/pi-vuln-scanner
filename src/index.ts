@@ -12,9 +12,9 @@ export default function piVulnScanner(pi: ExtensionAPI): void {
   let activeScan: Promise<ScanReport> | undefined;
   let lastReport: ScanReport | undefined;
 
-  pi.registerEntryRenderer(REPORT_ENTRY_TYPE, (entry, options, theme) => {
+  pi.registerEntryRenderer(REPORT_ENTRY_TYPE, (entry, _options, theme) => {
     const data = entry.data as { report?: string; summary?: string };
-    const text = options.expanded ? (data.report ?? data.summary ?? "") : (data.summary ?? data.report ?? "");
+    const text = data.report ?? data.summary ?? "";
     return new Text(theme.fg("dim", text), 0, 0);
   });
 
@@ -119,7 +119,7 @@ export default function piVulnScanner(pi: ExtensionAPI): void {
       try {
         const report = await scanNow(ctx, force);
         showReport(report);
-        if (ctx.hasUI) ctx.ui.notify(renderSummaryLine(report), report.summary.worstSeverity === "none" ? "info" : "warning");
+        if (ctx.hasUI) ctx.ui.notify(renderSummaryLine(report), renderStartupWarning(report) ? "warning" : "info");
       } catch (error) {
         if (ctx.hasUI) ctx.ui.notify(`Scan failed: ${error instanceof Error ? error.message : String(error)}`, "error");
       }

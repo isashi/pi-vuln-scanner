@@ -17,6 +17,10 @@ function countsText(counts: Record<Severity, number>): string {
     .join(", ") || "0 vulnerabilities";
 }
 
+function signalCount(report: ScanReport): number {
+  return report.packages.reduce((total, result) => total + result.signals.length, 0);
+}
+
 function packageHeader(result: PackageScanResult): string {
   const source = result.pkg.source ?? result.pkg.sourceKind;
   const version = result.pkg.version ? `@${result.pkg.version}` : "";
@@ -32,14 +36,17 @@ export function renderScanReport(report: ScanReport): string {
   lines.push(`Duration: ${report.summary.durationMs}ms`);
   lines.push(`Packages: ${report.summary.totalPackages}`);
   lines.push(`Vulnerabilities: ${countsText(report.summary.counts)}`);
+  lines.push(`Risk signals: ${signalCount(report)}`);
   lines.push(`Worst severity: ${LABELS[report.summary.worstSeverity]}`);
   lines.push("");
 
-  const risky = report.packages.filter((result) => result.worstSeverity !== "none");
-  if (risky.length === 0) {
+  const noteworthy = report.packages.filter((result) => result.findings.length > 0 || result.signals.length > 0);
+  if (noteworthy.length === 0) {
     lines.push("No vulnerable or risky pi packages found.");
   } else {
-    for (const result of risky) {
+    lines.push("Packages with vulnerabilities or signals:");
+    lines.push("");
+    for (const result of noteworthy) {
       lines.push(packageHeader(result));
       lines.push(`  Path: ${result.pkg.rootPath}`);
       if (result.findings.length > 0) lines.push(`  Vulnerabilities: ${countsText(result.counts)}`);
@@ -83,7 +90,9 @@ export function renderScanReport(report: ScanReport): string {
 export function renderSummaryLine(report: ScanReport): string {
   const counts = report.summary.counts;
   const vuln = countsText(counts);
-  return `pi packages: ${report.summary.totalPackages}, ${vuln}, worst ${LABELS[report.summary.worstSeverity]}`;
+  const signals = signalCount(report);
+  const signalsText = signals === 1 ? "1 signal" : `${signals} signals`;
+  return `pi packages: ${report.summary.totalPackages}, ${vuln}, ${signalsText}, worst ${LABELS[report.summary.worstSeverity]}`;
 }
 
 export function renderStartupWarning(report: ScanReport): string | undefined {

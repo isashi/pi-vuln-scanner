@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented here.
 
+## 0.1.2 - 2026-07-31
+
+- Show the full scan report by default instead of only the collapsed summary.
+- Treat info-only scan results as informational notifications, not warnings.
+- Include risk signal counts in the summary line.
+
 ## 0.1.1 - 2026-07-31
 
 - Add GitHub Pages `.nojekyll` marker.
