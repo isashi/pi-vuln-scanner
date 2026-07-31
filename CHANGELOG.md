@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented here.
 
+## 0.2.1 - 2026-07-31
+
+- Downgrade "new npm package" from LOW to INFO.
+- Suppress deps.dev 404 responses for newly published packages that are not indexed yet.
+
 ## 0.2.0 - 2026-07-31
 
 - Add configurable deps.dev provider.

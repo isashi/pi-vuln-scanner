@@ -34,6 +34,7 @@ export async function scanDepsDevPackage(pkg: InstalledPackage): Promise<{ findi
 
   try {
     const response = await fetchWithTimeout(packageUrl(pkg), 20_000);
+    if (response.status === 404) return { findings: [], signals: [] };
     if (!response.ok) return { findings: [], signals: [], error: `deps.dev request failed for ${pkg.name}: HTTP ${response.status}` };
     const data = await response.json() as DepsDevVersionResponse;
 

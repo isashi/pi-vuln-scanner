@@ -55,7 +55,7 @@ export async function scanNpmRegistryPackage(pkg: InstalledPackage): Promise<{ f
     if (created) {
       const ageDays = (Date.now() - Date.parse(created)) / 86_400_000;
       if (Number.isFinite(ageDays) && ageDays < 30) {
-        signals.push({ severity: "low", label: "new npm package", details: `created ${Math.max(0, Math.round(ageDays))} day(s) ago` });
+        signals.push({ severity: "info", label: "new npm package", details: `created ${Math.max(0, Math.round(ageDays))} day(s) ago` });
       }
     }
 
