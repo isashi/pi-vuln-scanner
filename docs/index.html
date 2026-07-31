@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>pi-vuln-scanner</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bg: #0d1117;
+        --fg: #e6edf3;
+        --muted: #8b949e;
+        --accent: #f0883e;
+        --card: #161b22;
+      }
+      body {
+        margin: 0;
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: var(--bg);
+        color: var(--fg);
+        line-height: 1.6;
+      }
+      main {
+        max-width: 820px;
+        margin: 0 auto;
+        padding: 64px 24px;
+      }
+      h1 { font-size: clamp(2.2rem, 7vw, 4rem); line-height: 1; margin: 0 0 16px; }
+      h2 { margin-top: 40px; }
+      p { color: var(--muted); }
+      a { color: var(--accent); }
+      pre {
+        background: var(--card);
+        border: 1px solid #30363d;
+        border-radius: 12px;
+        padding: 18px;
+        overflow-x: auto;
+      }
+      code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+      .badge {
+        display: inline-block;
+        color: var(--bg);
+        background: var(--accent);
+        border-radius: 999px;
+        padding: 4px 10px;
+        font-weight: 700;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: .06em;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid #30363d;
+        border-radius: 16px;
+        padding: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <span class="badge">pi extension</span>
+      <h1>pi-vuln-scanner</h1>
+      <p>
+        Scan locally installed pi packages for vulnerabilities and supply-chain risk.
+        Advisory-only by default, with startup warnings and clear removal hints.
+      </p>
+
+      <h2>Install</h2>
+      <pre><code>pi install npm:pi-vuln-scanner</code></pre>
+
+      <h2>Commands</h2>
+      <pre><code>/pi-scan
+/pi-scan-report
+/pi-scan-config
+/pi-scan-clear-cache</code></pre>
+
+      <div class="card">
+        <h2>Privacy-first</h2>
+        <p>
+          The scanner does not send local source code to third-party services.
+          OSV lookups use npm package names and versions only when network scanning is enabled.
+        </p>
+      </div>
+
+      <p>
+        Source: <a href="https://github.com/isashi/pi-vuln-scanner">github.com/isashi/pi-vuln-scanner</a>
+      </p>
+    </main>
+  </body>
+</html>
