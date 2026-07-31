@@ -1,7 +1,7 @@
 export type PackageSourceKind = "npm" | "git" | "local" | "unknown";
 export type PackageScope = "global" | "project";
 export type Severity = "critical" | "high" | "medium" | "low" | "info" | "none";
-export type FindingSource = "npm-audit" | "osv" | "package-metadata";
+export type FindingSource = "npm-audit" | "osv" | "deps-dev" | "oss-index" | "npm-registry" | "package-metadata";
 
 export interface ScannerConfig {
   scanOnStartup: boolean;
@@ -9,6 +9,10 @@ export interface ScannerConfig {
   providers: {
     npmAudit: boolean;
     osv: boolean;
+    osvTransitive: boolean;
+    depsDev: boolean;
+    ossIndex: boolean;
+    npmRegistry: boolean;
     packageMetadata: boolean;
   };
   thresholds: {
@@ -19,6 +23,10 @@ export interface ScannerConfig {
     allowNetwork: boolean;
     sendNpmPackageNames: boolean;
     sendLocalPackagePaths: boolean;
+  };
+  ossIndex: {
+    usernameEnv: string;
+    tokenEnv: string;
   };
 }
 

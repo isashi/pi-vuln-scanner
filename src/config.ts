@@ -14,6 +14,10 @@ export const DEFAULT_CONFIG: ScannerConfig = {
   providers: {
     npmAudit: true,
     osv: true,
+    osvTransitive: true,
+    depsDev: true,
+    ossIndex: false,
+    npmRegistry: true,
     packageMetadata: true,
   },
   thresholds: {
@@ -24,6 +28,10 @@ export const DEFAULT_CONFIG: ScannerConfig = {
     allowNetwork: true,
     sendNpmPackageNames: true,
     sendLocalPackagePaths: false,
+  },
+  ossIndex: {
+    usernameEnv: "OSS_INDEX_USERNAME",
+    tokenEnv: "OSS_INDEX_TOKEN",
   },
 };
 
@@ -47,6 +55,10 @@ function mergeConfig(raw: unknown): ScannerConfig {
     privacy: {
       ...DEFAULT_CONFIG.privacy,
       ...(isObject(raw.privacy) ? raw.privacy : {}),
+    },
+    ossIndex: {
+      ...DEFAULT_CONFIG.ossIndex,
+      ...(isObject(raw.ossIndex) ? raw.ossIndex : {}),
     },
   } as ScannerConfig;
 }

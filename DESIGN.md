@@ -70,21 +70,24 @@ For each package, collect:
 
 2. **OSV.dev**
    - Query package coordinates (`npm` ecosystem, name, version).
+   - Use `querybatch` with npm lockfile data for transitive dependency checks.
    - Free and machine-readable.
-   - Useful for direct package vulnerabilities and enrichment.
+
+3. **deps.dev**
+   - Query npm package/version metadata and advisory keys.
+   - No external API key.
+
+4. **npm registry metadata**
+   - Repository URL, deprecated flag, maintainers, publish time.
+   - Useful for maintenance/risk context, not vulnerability authority.
+
+5. **Sonatype OSS Index**
+   - Optional provider for PURL-based vulnerability checks.
+   - Requires user credentials/API token in environment variables.
 
 ### Optional/future scanners
 
-3. **Socket.dev**
-   - Useful for supply-chain signals.
-   - Do not rely on scraping public HTML pages for the core product.
-   - If Socket offers unauthenticated stable endpoints they can be added; otherwise support it only as an optional provider with user opt-in/API token.
-
-4. **npm registry metadata**
-   - Downloads, repository URL, deprecated flag, maintainers, publish time.
-   - Useful for maintenance/risk context, not vulnerability authority.
-
-5. **GitHub metadata**
+6. **GitHub metadata**
    - Stars, archived status, last push, issues.
    - Optional and rate-limited; should never be required for baseline scan.
 
@@ -130,7 +133,10 @@ Suggested default config:
   "providers": {
     "npmAudit": true,
     "osv": true,
-    "socket": false
+    "osvTransitive": true,
+    "depsDev": true,
+    "ossIndex": false,
+    "npmRegistry": true
   },
   "thresholds": {
     "startupWarning": "high",

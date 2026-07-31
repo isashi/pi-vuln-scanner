@@ -2,6 +2,14 @@
 
 All notable changes to this project are documented here.
 
+## 0.2.0 - 2026-07-31
+
+- Add configurable deps.dev provider.
+- Add OSV transitive dependency checks using npm lockfile data.
+- Add configurable npm registry metadata provider.
+- Add optional Sonatype OSS Index provider using environment credentials.
+- Remove report notes section.
+
 ## 0.1.2 - 2026-07-31
 
 - Show the full scan report by default instead of only the collapsed summary.

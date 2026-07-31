@@ -40,10 +40,11 @@ Only locally installed pi packages are scanned:
 ## Data sources
 
 - `npm audit --json --omit=dev` when an npm lockfile is available.
-- OSV.dev for npm package name/version lookups.
+- OSV.dev for npm package name/version lookups, including transitive dependency checks from npm lockfiles.
+- deps.dev package version metadata and advisory keys.
+- npm registry metadata for deprecation, publish age, and package metadata signals.
+- Optional Sonatype OSS Index checks when credentials are configured.
 - Local package metadata checks for lifecycle scripts, native-code indicators, missing pi manifest/resources, and basic package quality signals.
-
-Socket.dev is not queried in the MVP. Public Socket.dev web pages are not scraped because that would be brittle and may violate service terms.
 
 ## Configuration
 
@@ -62,6 +63,10 @@ Default config:
   "providers": {
     "npmAudit": true,
     "osv": true,
+    "osvTransitive": true,
+    "depsDev": true,
+    "ossIndex": false,
+    "npmRegistry": true,
     "packageMetadata": true
   },
   "thresholds": {
@@ -72,13 +77,17 @@ Default config:
     "allowNetwork": true,
     "sendNpmPackageNames": true,
     "sendLocalPackagePaths": false
+  },
+  "ossIndex": {
+    "usernameEnv": "OSS_INDEX_USERNAME",
+    "tokenEnv": "OSS_INDEX_TOKEN"
   }
 }
 ```
 
 ## Privacy
 
-The extension does not send local source code to third-party services. OSV queries send npm package names and versions only when network access and npm package-name sharing are enabled.
+The extension does not send local source code to third-party services. Network scanners send npm package names and versions only when network access and npm package-name sharing are enabled.
 
 ## Removal commands
 

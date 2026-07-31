@@ -80,10 +80,6 @@ export function renderScanReport(report: ScanReport): string {
     lines.push("");
   }
 
-  lines.push("Notes:");
-  lines.push("  - Report is advisory only; pi package loading is not blocked.");
-  lines.push("  - Network providers send npm package names and versions only when enabled.");
-  lines.push("  - Socket.dev is not queried automatically in this MVP; public pages are not scraped.");
   return lines.join("\n");
 }
 
